@@ -1,0 +1,289 @@
+<template>
+	<view class="pages">
+		<!-- #ifndef H5 -->
+		<statusBar></statusBar>
+		<!-- #endif -->
+		<SelectData :date="selectedDate" @onChange="handleChangeDate"></SelectData>
+		<Total :income="total.income" :expense="total.expense"></Total>
+		<scroll-view scroll-y="true" class="content">
+			<Item
+				v-for="item in dataSource"
+				:data="item"
+				:key="item.date"
+				@onDelete="handleDelete"
+				@onEdit="showPopup"
+			/>
+		</scroll-view>
+		<uni-fab @fabClick="showPopup" />
+	</view>
+	<Detail
+		v-if="visible"
+		:visible="visible"
+		:detail="detail"
+		:dataSource="classifyList"
+		@onOk="handleOk"
+		@onCancel="hidePopup"
+		@onGetClassifyList="getClassifyList"
+	/>
+</template>
+
+<script setup>
+import Icon from '@/components/icon/icon.vue';
+import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar';
+import Item from './Item.nvue';
+import Total from './Total.vue';
+import SelectData from './SelectData.vue';
+import Detail from './Detail.vue';
+
+import { onMounted, ref } from 'vue';
+import { getFirstDayOfMonth, getLastDayOfMonth } from '@/utils/index.js';
+import { getDateByDay } from '../../utils/date-format';
+
+const db = uniCloud.database();
+const dbCmd = db.command;
+const udbRef = ref(null);
+const selectedDate = ref(new Date());
+const dataSource = ref([]);
+const classifyList = ref([]);
+const detail = ref({});
+const total = ref({ income: 0, expense: 0 });
+const visible = ref(false);
+
+onMounted(() => {
+	getData();
+	getClassifyList({
+		billType: 'expense'
+	});
+});
+
+const pushClassify = (item) => {
+	// 24个一组
+	if (
+		!classifyList.value[classifyList.value.length - 1] ||
+		classifyList.value[classifyList.value.length - 1].length % 24 === 0
+	) {
+		classifyList.value.push([]);
+	}
+
+	classifyList.value[classifyList.value.length - 1].push({
+		...item
+	});
+};
+
+// 查询数据
+const getData = async () => {
+	const firstDay = getFirstDayOfMonth(selectedDate.value);
+	const lastDay = getLastDayOfMonth(selectedDate.value);
+
+	const bills = db
+		.collection('db-bills')
+		.where({
+			create_date: dbCmd.gte(firstDay).and(dbCmd.lte(lastDay)),
+			user_id: uni.getStorageSync('uni-id-pages-userInfo')._id
+		})
+		.getTemp();
+
+	const {
+		result: { data }
+	} = await db.collection(bills, 'db-bill-classifies').get();
+
+	// const data = [
+	// 	{
+	// 		_id: '111',
+	// 		title: '1',
+	// 		price: 10000,
+	// 		create_date: 1715303220924,
+	// 		classify_id: [
+	// 			{
+	// 				_id: '662f0e69ec10127aac5a2650',
+	// 				name: '教育',
+	// 				ico: '\ue605',
+	// 				billType: 'expense',
+	// 				background: '#3c4db3'
+	// 			}
+	// 		]
+	// 	},
+	// 	{
+	// 		_id: '222',
+	// 		title: '22',
+	// 		price: 10,
+	// 		create_date: 1715303220922,
+	// 		classify_id: [
+	// 			{
+	// 				_id: '662f0e69ec10127aac5a2650',
+	// 				name: '教育',
+	// 				ico: '\ue605',
+	// 				billType: 'income',
+	// 				background: '#3c4db3'
+	// 			}
+	// 		]
+	// 	},
+	// 	{
+	// 		_id: '222',
+	// 		title: '22',
+	// 		price: 10,
+	// 		create_date: 1715303220922,
+	// 		classify_id: [
+	// 			{
+	// 				_id: '662f0e69ec10127aac5a2650',
+	// 				name: '教育',
+	// 				ico: '\ue605',
+	// 				billType: 'income',
+	// 				background: '#3c4db3'
+	// 			}
+	// 		]
+	// 	}
+	// ];
+
+	dataSource.value = [];
+	total.value = { income: 0, expense: 0 };
+	data.sort((a, b) => b.create_date - a.create_date).forEach((item) => {
+		const { create_date, price } = item;
+		let len = dataSource.value.length - 1;
+		const lastDateString = len !== -1 ? new Date(dataSource.value[len].date).toLocaleDateString() : '';
+		const thisDateString = new Date(create_date).toLocaleDateString();
+
+		if (len === -1 || lastDateString !== thisDateString) {
+			dataSource.value.push({
+				date: new Date(create_date).toLocaleDateString(),
+				price: 0,
+				children: []
+			});
+			len++;
+		}
+
+		dataSource.value[len].children.push({
+			...item,
+			classify: item.classify_id[0] || {}
+		});
+		dataSource.value[len].price += price;
+		total.value[item.classify_id[0].billType] += price;
+	});
+};
+
+// 获取分类列表
+const getClassifyList = async ({ billType }) => {
+	const {
+		result: { data: classifies }
+	} = await db
+		.collection('db-bill-classifies')
+		.where({
+			billType: billType || 'expense',
+			user_id: dbCmd.eq(uni.getStorageSync('uni-id-pages-userInfo')._id).or(dbCmd.eq(null))
+		})
+		.get();
+
+	classifyList.value = [];
+
+	classifies.forEach((item) => {
+		pushClassify({
+			...item
+		});
+	});
+};
+
+// 选择日期
+const handleChangeDate = (space) => {
+	const thisDate = new Date(selectedDate.value);
+	let year = thisDate.getFullYear();
+	let month = thisDate.getMonth() + 1;
+
+	if (month === 1 && space === -1) {
+		year -= 1;
+		month = 12;
+	} else if (month === 12 && space === 1) {
+		year += 1;
+		month = 1;
+	} else {
+		month += space;
+	}
+
+	selectedDate.value = new Date(`${year}/${month}-1`);
+	getData();
+};
+
+// 显示popup
+const showPopup = (params) => {
+	visible.value = true;
+	uni.hideTabBar();
+
+	detail.value = params ? params : {};
+};
+
+// 隐藏弹框
+const hidePopup = () => {
+	uni.showTabBar();
+	visible.value = false;
+	detail.value = {};
+};
+
+const handleOk = (params) => {
+	// 新增
+	if (JSON.stringify(detail.value) === '{}') {
+		db.collection('db-bills')
+			.add({
+				price: params.price,
+				title: params.title,
+				desc: params.desc,
+				billType: params.billType,
+				create_date: params.create_date,
+				classify_id: params.classify._id
+			})
+			.then(() => {
+				hidePopup();
+				getData();
+			});
+		return;
+	}
+
+	// 修改
+	db.collection('db-bills')
+		.doc(params._id)
+		.update({
+			price: params.price,
+			title: params.title,
+			desc: params.desc,
+			billType: params.billType,
+			create_date: params.create_date,
+			classify_id: params.classify._id
+		})
+		.then(() => {
+			hidePopup();
+			getData();
+		});
+};
+
+// 删除
+const handleDelete = (id) => {
+	db.collection('db-bills')
+		.doc(id)
+		.remove()
+		.then(() => {
+			getData();
+		});
+};
+</script>
+
+<style lang="less" scoped>
+.pages {
+	height: 100%;
+	background-color: #ffffff;
+}
+
+.content {
+	flex-grow: 1;
+	flex-shrink: 1;
+	overflow: hidden;
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		width: 1px;
+		height: 100%;
+		background: #999;
+	}
+}
+</style>

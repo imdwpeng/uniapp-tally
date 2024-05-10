@@ -1,0 +1,13 @@
+{
+  "component": true,
+  "usingComponents": {
+    "uni-segmented-control": "../../uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control",
+    "uni-grid-item": "../../uni_modules/uni-grid/components/uni-grid-item/uni-grid-item",
+    "uni-grid": "../../uni_modules/uni-grid/components/uni-grid/uni-grid",
+    "uni-popup-dialog": "../../uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog",
+    "uni-popup": "../../uni_modules/uni-popup/components/uni-popup/uni-popup",
+    "modal": "../../components/modal/index",
+    "icon": "../../components/icon/icon",
+    "calculator": "../../components/calculator/calculator"
+  }
+}

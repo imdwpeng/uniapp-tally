@@ -1,0 +1,16 @@
+{
+	"schedule": {
+		"__UNI__AFF6350": {
+			"enable": true,
+			"mp-weixin": {
+				"enable": true,
+				"tasks": ["accessToken"]
+			},
+			"h5-weixin": {
+				"enable": false,
+				"tasks": ["ticket"]
+			}
+		}
+	},
+	"ipWhitelist": ["0.0.0.0"]
+}

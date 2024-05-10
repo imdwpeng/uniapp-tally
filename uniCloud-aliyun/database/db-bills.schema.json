@@ -1,0 +1,60 @@
+{
+	"bsonType": "object",
+	"required": ["user_id", "title", "price", "billType", "classify_id", "create_date"],
+	"permission": {
+		"read": "auth.uid != null",
+		"create": "auth.uid != null",
+		"update": "auth.uid != null",
+		"delete": "auth.uid != null"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "用户ID， 参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id",
+			"defaultValue": {
+				"$env": "uid"
+			}
+		},
+		"price": {
+			"bsonType": "int",
+			"description": "金额，单位：分"
+		},
+		"title": {
+			"bsonType": "string",
+			"title": "标题",
+			"description": "标题"
+		},
+		"desc": {
+			"bsonType": "string",
+			"title": "备注",
+			"description": "备注"
+		},
+		"billType": {
+			"bsonType": "string",
+			"title": "账单类型",
+			"description": "账单类型，收入(income)\/支出(expense)"
+		},
+		"classify_id": {
+			"bsonType": "string",
+			"title": "分类",
+			"description": "分类",
+			"foreignKey": "db-bill-classifies._id",
+			"permission": {
+				"read": true
+			}
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"title": "创建时间",
+			"description": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		}
+	},
+	"version": "0.0.1"
+}

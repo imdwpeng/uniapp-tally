@@ -1,0 +1,84 @@
+
+	/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+		font-family: 'iconfont';
+		/* Project id 4526742 */
+		src: url('https://at.alicdn.com/t/c/font_4526742_ul7c7z89bk.woff2?t=1714983076400') format('woff2'),
+			url('https://at.alicdn.com/t/c/font_4526742_ul7c7z89bk.woff?t=1714983076400') format('woff'),
+			url('https://at.alicdn.com/t/c/font_4526742_ul7c7z89bk.ttf?t=1714983076400') format('truetype');
+}
+.uniui-bianji:before {
+		content: "\e67f";
+}
+.uniui-icon_traffic:before {
+		content: "\e605";
+}
+.uniui-icon_investment:before {
+		content: "\e614";
+}
+.uniui-icon_tour:before {
+		content: "\e9d3";
+}
+.uniui-icon_salary:before {
+		content: "\e615";
+}
+.uniui-icon_entertainment:before {
+		content: "\e63a";
+}
+.uniui-icon_phone:before {
+		content: "\e617";
+}
+.uniui-icon_study:before {
+		content: "\e661";
+}
+.uniui-icon_other:before {
+		content: "\e646";
+}
+.uniui-icon_medicine:before {
+		content: "\e60e";
+}
+.uniui-icon_makeup:before {
+		content: "\e611";
+}
+.uniui-renqing:before {
+		content: "\e628";
+}
+.uniui-icon_daily:before {
+		content: "\e639";
+}
+.uniui-icon_clothes:before {
+		content: "\e603";
+}
+.uniui-riyongpin:before {
+		content: "\e65d";
+}
+.uniui-jiayou:before {
+		content: "\e60c";
+}
+.uniui-shuma:before {
+		content: "\e6f1";
+}
+.uniui-zhufangxinxi:before {
+		content: "\e616";
+}
+.uniui-yongcan:before {
+		content: "\e67d";
+}
+.uniui-huiyuanjiangjin:before {
+		content: "\e62f";
+}
+.uniui-fangdai:before {
+		content: "\e62b";
+}
+.uniui-zhuangxiu:before {
+		content: "\e6d5";
+}
+.uniui-jiaju:before {
+		content: "\e62c";
+}
+.uniui-shouru:before {
+		content: "\e676";
+}
+.uniui-yinger:before {
+		content: "\e604";
+}

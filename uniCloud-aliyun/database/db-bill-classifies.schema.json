@@ -1,0 +1,40 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"title": "分类名称"
+		},
+		"ico": {
+			"bsonType": "string",
+			"title": "图标"
+		},
+		"background": {
+			"bsonType": "string",
+			"title": "背景颜色"
+		},
+		"billType": {
+			"bsonType": "string",
+			"title": "账单类型",
+			"description": "账单类型，收入(income)\/支出(expense)"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "用户ID， 参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id",
+			"defaultValue": {
+				"$env": "uid"
+			}
+		}
+	}
+}

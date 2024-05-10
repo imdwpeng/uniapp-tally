@@ -1,0 +1,209 @@
+<template>
+	<view class="time-line-container">
+		<view class="time-line-header">
+			<uni-dateformat class="time-line-date" :date="data.date" format="dd日"></uni-dateformat>
+			<view class="time-line-circle"></view>
+			<text class="time-line-total-price">{{ data.price.toFixed(2) }}</text>
+		</view>
+		<view
+			v-for="(item, index) in data.children"
+			class="time-line-item"
+			:class="{
+				'time-line-first-item': index === 0,
+				'time-line-has-desc': !!item.desc,
+				'time-line-item-income': item.classify.billType === 'income'
+			}"
+			:key="item._id"
+		>
+			<Icon
+				class="time-line-ico"
+				fontSize="20"
+				:type="item.classify.ico"
+				:color="item.classify.background"
+				@click="toggleVisibleIcons(index)"
+			></Icon>
+			<uni-transition
+				:mode-class="['fade', 'slide-left']"
+				:show="showIndex === index"
+				:style="{ position: 'absolute', right: '36%', width: '24px', height: '24px' }"
+			>
+				<Icon
+					class="time-line-ico"
+					fontSize="24"
+					type="editor"
+					color="#0070ff"
+					@click="handleEdit(item)"
+				></Icon>
+			</uni-transition>
+			<uni-transition
+				:mode-class="['fade', 'slide-right']"
+				:show="showIndex === index"
+				:style="{ position: 'absolute', left: '34%', width: '24px', height: '24px' }"
+			>
+				<Icon
+					class="time-line-ico"
+					fontSize="24"
+					type="delete"
+					color="#ef0505"
+					@click="toggleVisibleDelete(item._id)"
+				></Icon>
+			</uni-transition>
+			<view class="time-line-inner" @click="handleEdit(item)">
+				<template v-if="showIndex !== index">
+					<view class="time-line-item-content">
+						<text class="time-line-title">{{ item.title }}</text>
+						<text class="time-line-price">{{ item.price.toFixed(2) }}</text>
+					</view>
+					<text class="time-line-item-desc" v-if="!!item.desc">{{ item.desc }}</text>
+				</template>
+			</view>
+		</view>
+	</view>
+	<uni-popup ref="deleteRef" type="dialog">
+		<uni-popup-dialog
+			type="info"
+			title="提示"
+			content="确认删除？"
+			cancelText="取消"
+			confirmText="确定"
+			@confirm="handleDelete"
+		></uni-popup-dialog>
+	</uni-popup>
+</template>
+
+<script setup>
+import { computed, ref } from 'vue';
+import Icon from '@/components/icon/icon.vue';
+defineOptions({
+	inheritAttrs: false
+});
+defineProps(['data']);
+const emits = defineEmits(['onEdit', 'onDelete']);
+
+const deleteRef = ref(null);
+const showIndex = ref();
+const deleteId = ref();
+
+// 显隐操作组
+const toggleVisibleIcons = (index) => {
+	showIndex.value = index === showIndex.value ? '' : index;
+};
+
+// 显隐删除提示框
+const toggleVisibleDelete = (id) => {
+	showIndex.value = '';
+
+	if (!id) {
+		deleteRef.value.close();
+		deleteId.value = '';
+		return;
+	}
+	deleteRef.value.open();
+	deleteId.value = id;
+};
+
+// 删除
+const handleDelete = () => {
+	if (!deleteId.value) return;
+	toggleVisibleDelete();
+	emits('onDelete', deleteId.value);
+};
+
+// 编辑
+const handleEdit = (params) => {
+	emits('onEdit', params);
+	showIndex.value = '';
+};
+</script>
+
+<style lang="less" scoped>
+.time-line-container {
+	position: relative;
+	display: block;
+	font-size: 14px;
+}
+
+.time-line-header,
+.time-line-item {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+
+.time-line-header {
+	margin-top: 20px;
+	justify-content: center;
+	color: #6e6c6c;
+	font-size: 12px;
+
+	.time-line-date {
+		width: 100px;
+		text-align: right;
+	}
+
+	.time-line-circle {
+		margin: 0 10px;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: #999;
+	}
+
+	.time-line-total-price {
+		width: 100px;
+	}
+}
+
+.time-line-item {
+	position: relative;
+	justify-content: flex-end;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	height: 20px;
+
+	&.time-line-first-item {
+		margin-top: 15px;
+	}
+
+	&.time-line-has-desc {
+		align-items: self-start;
+	}
+
+	.time-line-ico {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: #fff;
+	}
+
+	.time-line-title {
+		margin: 0 10px;
+	}
+
+	.time-line-price {
+		color: #6e6c6c;
+	}
+}
+
+.time-line-item-content {
+	flex-direction: row;
+}
+
+.time-line-item-desc {
+	margin-left: 10px;
+	color: #6e6c6c;
+}
+
+.time-line-inner {
+	width: calc(50% - 10px);
+}
+
+.time-line-item-income {
+	justify-content: flex-start;
+
+	.time-line-item-content {
+		flex-direction: row-reverse;
+	}
+}
+</style>

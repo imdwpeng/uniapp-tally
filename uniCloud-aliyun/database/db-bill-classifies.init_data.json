@@ -1,0 +1,176 @@
+[{
+		"_id": "662f0e69ec10127aac5a2650",
+		"name": "教育",
+		"ico": "",
+		"billType": "expense",
+		"background": "#3c4db3"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2648",
+		"name": "爱宝",
+		"ico": "",
+		"billType": "expense",
+		"background": "#e5958e"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a264e",
+		"name": "医疗",
+		"ico": "",
+		"billType": "expense",
+		"background": "#f82a26"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a264c",
+		"name": "用车",
+		"ico": "",
+		"billType": "expense",
+		"background": "#ff5c64"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2651",
+		"name": "丽人",
+		"ico": "",
+		"billType": "expense",
+		"background": "#e68cbf"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2645",
+		"name": "房贷",
+		"ico": "\ue62b",
+		"billType": "expense",
+		"background": "#1296db"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2658",
+		"name": "通讯",
+		"ico": "",
+		"billType": "expense",
+		"background": "#91ebef"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a264a",
+		"name": "人情",
+		"ico": "",
+		"billType": "expense",
+		"background": "#fb9f00"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2657",
+		"name": "工资",
+		"ico": "",
+		"billType": "income",
+		"background": "#ffc344"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a265b",
+		"name": "投资",
+		"ico": "",
+		"billType": "expense",
+		"background": "#613cea"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2646",
+		"name": "一般",
+		"ico": "",
+		"billType": "expense",
+		"background": "#8ca8e6"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2649",
+		"name": "用餐",
+		"ico": "",
+		"billType": "expense",
+		"background": "#fd992a"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a265a",
+		"name": "交通",
+		"ico": "",
+		"billType": "expense",
+		"background": "#40dca7"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a265d",
+		"name": "数码",
+		"ico": "",
+		"billType": "expense",
+		"background": "#13227a"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a264f",
+		"name": "其他",
+		"ico": "",
+		"billType": "expense",
+		"background": "#b5b5c4"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2654",
+		"name": "装修",
+		"ico": "",
+		"billType": "expense",
+		"background": "#ff5844"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2653",
+		"name": "家居",
+		"ico": "",
+		"billType": "expense",
+		"background": "#a6d3f2"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a264b",
+		"name": "住房",
+		"ico": "",
+		"billType": "expense",
+		"background": "#ff6e70"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2652",
+		"name": "服饰",
+		"ico": "",
+		"billType": "expense",
+		"background": "#f299c4"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2655",
+		"name": "一般",
+		"ico": "",
+		"billType": "income",
+		"background": "#f7d78c"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a264d",
+		"name": "娱乐",
+		"ico": "",
+		"billType": "expense",
+		"background": "#ffba00"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2659",
+		"name": "投资",
+		"ico": "",
+		"billType": "income",
+		"background": "#613cea"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a265c",
+		"name": "旅游",
+		"ico": "",
+		"billType": "expense",
+		"background": "#45ce88"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2647",
+		"name": "日用品",
+		"ico": "",
+		"billType": "expense",
+		"background": "#afc3a8"
+	},
+	{
+		"_id": "662f0e69ec10127aac5a2656",
+		"name": "奖金",
+		"ico": "",
+		"billType": "income",
+		"background": "#fdb095"
+	}
+]

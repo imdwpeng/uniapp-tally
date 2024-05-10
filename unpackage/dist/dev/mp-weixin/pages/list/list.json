@@ -1,0 +1,10 @@
+{
+  "enablePullDownRefresh": true,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "uni-fab": "../../uni_modules/uni-fab/components/uni-fab/uni-fab",
+    "status-bar": "../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar",
+    "item": "./Item",
+    "form-modal": "./FormModal"
+  }
+}

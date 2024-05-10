@@ -1,0 +1,1 @@
+<view wx:if="{{a}}" class="container data-v-67708857"><uni-icons wx:if="{{c}}" class="deleteIcon data-v-67708857" bindclick="{{b}}" u-i="67708857-0" bind:__l="__l" u-p="{{c}}"/><slot/></view>
